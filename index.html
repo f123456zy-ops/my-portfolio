@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>个人主页</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0f0e;
+    --bg2: #171714;
+    --bg3: #1e1e1a;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.13);
+    --text: #e8e4dc;
+    --text2: #8a8580;
+    --text3: #5a5651;
+    --accent: #c9a96e;
+    --accent2: #e8c98a;
+    --green: #7ab87a;
+    --red: #c97a6e;
+    --blue: #6e9ac9;
+    --radius: 3px;
+    --font-display: 'DM Serif Display', Georgia, serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    position: fixed;
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease;
+    transform: translate(-50%, -50%);
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 32px; height: 32px;
+    border: 1px solid rgba(201,169,110,0.4);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transition: transform 0.08s ease, width 0.2s, height 0.2s, border-color 0.2s;
+    transform: translate(-50%, -50%);
+  }
+  body.hovering .cursor-ring {
+    width: 48px; height: 48px;
+    border-color: rgba(201,169,110,0.7);
+  }
+
+  /* Nav */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 3rem;
+    background: rgba(15,15,14,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--text2);
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+    font-family: var(--font-mono);
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 0 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 70% 50%, rgba(201,169,110,0.04) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 20% 80%, rgba(110,154,201,0.03) 0%, transparent 60%);
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+  }
+
+  .hero-tag {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.2s ease forwards;
+  }
+
+  .hero-name {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.35s ease forwards;
+  }
+
+  .hero-name em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    color: var(--text2);
+    line-height: 1.2;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.5s ease forwards;
+  }
+
+  .hero-desc {
+    font-size: 16px;
+    color: var(--text2);
+    max-width: 480px;
+    line-height: 1.8;
+    margin-bottom: 3rem;
+    font-weight: 300;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.65s ease forwards;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.8s ease forwards;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #0f0f0e;
+    padding: 0.75rem 1.75rem;
+    font-size: 13px;
+    font-family: var(--font-mono);
+    letter-spacing: 0.08em;
+    border: none;
+    cursor: none;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
+
+  .btn-ghost {
+    color: var(--text2);
+    padding: 0.75rem 1.75rem;
+    font-size: 13px;
+    font-family: var(--font-mono);
+    letter-spacing: 0.08em;
+    border: 1px solid var(--border2);
+    cursor: none;
+    text-decoration: none;
+    display: inline-block;
+    transition: color 0.2s, border-color 0.2s, transform 0.15s;
+  }
+  .btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.25); transform: translateY(-1px); }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 3rem; left: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    opacity: 0;
+    animation: fadeIn 1s 1.2s ease forwards;
+  }
+  .hero-scroll-line {
+    width: 40px;
+    height: 1px;
+    background: var(--text3);
+  }
+  .hero-scroll span {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* Section base */
+  section {
+    padding: 8rem 3rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.05;
+    margin-bottom: 3rem;
+  }
+
+  .section-title em { font-style: italic; color: var(--text2); }
+
+  hr.divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0;
+  }
+
+  /* About */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .about-text p {
+    color: var(--text2);
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.9;
+    margin-bottom: 1.25rem;
+  }
+  .about-text p:last-child { margin-bottom: 0; }
+
+  .about-stats {
+    display: grid;
+    gap: 1px;
+    background: var(--border);
+  }
+  .stat-item {
+    background: var(--bg);
+    padding: 2rem;
+  }
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+  .stat-label {
+    font-size: 13px;
+    color: var(--text3);
+    font-family: var(--font-mono);
+    letter-spacing: 0.05em;
+  }
+
+  /* Skills */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+  }
+  .skill-card {
+    background: var(--bg);
+    padding: 2rem;
+    transition: background 0.2s;
+  }
+  .skill-card:hover { background: var(--bg2); }
+  .skill-icon {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    letter-spacing: 0.1em;
+  }
+  .skill-name {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+  .skill-desc {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+  .skill-tags {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text3);
+    border: 1px solid var(--border2);
+    padding: 2px 8px;
+    letter-spacing: 0.05em;
+  }
+
+  /* Projects */
+  .projects-list {
+    display: grid;
+    gap: 1px;
+    background: var(--border);
+  }
+  .project-card {
+    background: var(--bg);
+    padding: 2.5rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: start;
+    transition: background 0.2s;
+    text-decoration: none;
+    color: inherit;
+  }
+  .project-card:hover { background: var(--bg2); }
+  .project-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text3);
+    margin-bottom: 1rem;
+    letter-spacing: 0.1em;
+  }
+  .project-title {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    line-height: 1.1;
+    margin-bottom: 0.75rem;
+  }
+  .project-desc {
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.8;
+    font-weight: 300;
+    max-width: 540px;
+  }
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+  }
+  .project-arrow {
+    font-family: var(--font-mono);
+    font-size: 20px;
+    color: var(--text3);
+    transition: color 0.2s, transform 0.2s;
+    margin-top: 0.25rem;
+  }
+  .project-card:hover .project-arrow { color: var(--accent); transform: translate(3px, -3px); }
+
+  /* Contact */
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+  .contact-info p {
+    color: var(--text2);
+    font-weight: 300;
+    line-height: 1.9;
+    margin-bottom: 2rem;
+  }
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--border);
+  }
+  .contact-link {
+    background: var(--bg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    text-decoration: none;
+    color: var(--text2);
+    font-size: 14px;
+    font-family: var(--font-mono);
+    transition: background 0.2s, color 0.2s;
+  }
+  .contact-link:hover { background: var(--bg2); color: var(--text); }
+  .contact-link span { color: var(--text3); font-size: 12px; }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--border);
+  }
+  .form-group {
+    background: var(--bg);
+    padding: 1.25rem;
+  }
+  .form-group label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 300;
+    resize: none;
+  }
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: var(--text3); }
+
+  .form-submit {
+    background: var(--accent);
+    color: #0f0f0e;
+    border: none;
+    padding: 1.25rem;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: none;
+    transition: background 0.2s;
+    width: 100%;
+    text-align: center;
+  }
+  .form-submit:hover { background: var(--accent2); }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  footer p {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text3);
+  }
+  footer a {
+    color: var(--text3);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  footer a:hover { color: var(--accent); }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1.5rem; }
+    section { padding: 5rem 1.5rem; }
+    .hero { padding: 0 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+    footer { flex-direction: column; gap: 0.75rem; text-align: center; }
+    .project-card { grid-template-columns: 1fr; }
+    .hero-scroll { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<nav>
+  <div class="nav-logo">// yourname</div>
+  <ul class="nav-links">
+    <li><a href="#about">关于</a></li>
+    <li><a href="#skills">技能</a></li>
+    <li><a href="#projects">作品</a></li>
+    <li><a href="#contact">联系</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <p class="hero-tag">// portfolio 2025</p>
+    <h1 class="hero-name">你的<em>名字</em></h1>
+    <p class="hero-title">设计师 & 开发者</p>
+    <p class="hero-desc">专注于构建优雅、高性能的数字产品。热衷于用代码与设计讲述故事，让复杂的事物变得简单而美好。</p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn-primary">查看作品</a>
+      <a href="#contact" class="btn-ghost">联系我</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    <span>向下滚动</span>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- About -->
+<section id="about">
+  <div class="reveal">
+    <p class="section-label">// 01 — about</p>
+    <h2 class="section-title">关于<em>我</em></h2>
+  </div>
+  <div class="about-grid reveal">
+    <div class="about-text">
+      <p>我是一名全栈开发者与 UI 设计师，拥有 5 年产品开发经验。热衷于将用户需求转化为流畅、直觉的数字体验。</p>
+      <p>我相信好的设计不只是视觉美感，更是对细节的深度理解。每一个像素、每一行代码都应该有其存在的意义。</p>
+      <p>业余时间喜欢摄影、探索新技术，以及在咖啡馆角落思考下一个改变世界的产品。</p>
+    </div>
+    <div class="about-stats">
+      <div class="stat-item">
+        <div class="stat-num">5+</div>
+        <div class="stat-label">年开发经验</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">30+</div>
+        <div class="stat-label">完成项目</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">12+</div>
+        <div class="stat-label">合作客户</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Skills -->
+<section id="skills">
+  <div class="reveal">
+    <p class="section-label">// 02 — skills</p>
+    <h2 class="section-title">我的<em>技能</em></h2>
+  </div>
+  <div class="skills-grid reveal">
+    <div class="skill-card">
+      <div class="skill-icon">[ 01 ]</div>
+      <div class="skill-name">前端开发</div>
+      <div class="skill-desc">构建响应式、高性能的 Web 应用，注重代码质量与用户体验。</div>
+      <div class="skill-tags">
+        <span class="tag">React</span>
+        <span class="tag">Vue</span>
+        <span class="tag">TypeScript</span>
+        <span class="tag">CSS</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">[ 02 ]</div>
+      <div class="skill-name">后端开发</div>
+      <div class="skill-desc">设计稳定、可扩展的 API 与服务架构，处理复杂业务逻辑。</div>
+      <div class="skill-tags">
+        <span class="tag">Node.js</span>
+        <span class="tag">Python</span>
+        <span class="tag">PostgreSQL</span>
+        <span class="tag">Redis</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">[ 03 ]</div>
+      <div class="skill-name">UI / UX 设计</div>
+      <div class="skill-desc">从用户研究到视觉设计，创造有情感温度的产品体验。</div>
+      <div class="skill-tags">
+        <span class="tag">Figma</span>
+        <span class="tag">Prototyping</span>
+        <span class="tag">Design System</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">[ 04 ]</div>
+      <div class="skill-name">DevOps</div>
+      <div class="skill-desc">搭建自动化部署流程，保障产品稳定高效地运行在云端。</div>
+      <div class="skill-tags">
+        <span class="tag">Docker</span>
+        <span class="tag">Nginx</span>
+        <span class="tag">CI/CD</span>
+        <span class="tag">Linux</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">[ 05 ]</div>
+      <div class="skill-name">移动端开发</div>
+      <div class="skill-desc">跨平台移动应用开发，兼顾性能与原生体验感受。</div>
+      <div class="skill-tags">
+        <span class="tag">React Native</span>
+        <span class="tag">Flutter</span>
+        <span class="tag">iOS</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">[ 06 ]</div>
+      <div class="skill-name">AI / 数据</div>
+      <div class="skill-desc">将机器学习能力整合到产品中，让应用更聪明、更个性化。</div>
+      <div class="skill-tags">
+        <span class="tag">Python</span>
+        <span class="tag">LLM API</span>
+        <span class="tag">Data Viz</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Projects -->
+<section id="projects">
+  <div class="reveal">
+    <p class="section-label">// 03 — projects</p>
+    <h2 class="section-title">精选<em>作品</em></h2>
+  </div>
+  <div class="projects-list reveal">
+    <a href="#" class="project-card">
+      <div>
+        <div class="project-num">// 001</div>
+        <div class="project-title">项目名称一</div>
+        <div class="project-desc">项目的简短描述，说明这个项目解决了什么问题，以及你在其中承担的角色和取得的成果。</div>
+        <div class="project-tags">
+          <span class="tag">React</span>
+          <span class="tag">Node.js</span>
+          <span class="tag">PostgreSQL</span>
+        </div>
+      </div>
+      <div class="project-arrow">↗</div>
+    </a>
+    <a href="#" class="project-card">
+      <div>
+        <div class="project-num">// 002</div>
+        <div class="project-title">项目名称二</div>
+        <div class="project-desc">另一个精彩项目的描述。可以是 SaaS 产品、开源工具、或是为客户打造的定制解决方案。</div>
+        <div class="project-tags">
+          <span class="tag">Vue</span>
+          <span class="tag">Python</span>
+          <span class="tag">Docker</span>
+        </div>
+      </div>
+      <div class="project-arrow">↗</div>
+    </a>
+    <a href="#" class="project-card">
+      <div>
+        <div class="project-num">// 003</div>
+        <div class="project-title">项目名称三</div>
+        <div class="project-desc">第三个代表作，展示你在不同领域的技术深度与设计品味。</div>
+        <div class="project-tags">
+          <span class="tag">React Native</span>
+          <span class="tag">Figma</span>
+          <span class="tag">API</span>
+        </div>
+      </div>
+      <div class="project-arrow">↗</div>
+    </a>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Contact -->
+<section id="contact">
+  <div class="reveal">
+    <p class="section-label">// 04 — contact</p>
+    <h2 class="section-title">一起<em>合作</em></h2>
+  </div>
+  <div class="contact-inner reveal">
+    <div class="contact-info">
+      <p>我目前接受新的项目合作与全职机会。如果你有有趣的想法，欢迎随时联系我——好的事情往往从一次对话开始。</p>
+      <div class="contact-links">
+        <a href="mailto:your@email.com" class="contact-link">
+          your@email.com
+          <span>Email →</span>
+        </a>
+        <a href="https://github.com/yourname" class="contact-link">
+          github.com/yourname
+          <span>GitHub →</span>
+        </a>
+        <a href="https://linkedin.com/in/yourname" class="contact-link">
+          linkedin.com/in/yourname
+          <span>LinkedIn →</span>
+        </a>
+      </div>
+    </div>
+    <div>
+      <div class="contact-form" id="contact-form">
+        <div class="form-group">
+          <label>你的名字</label>
+          <input type="text" placeholder="张三" id="f-name">
+        </div>
+        <div class="form-group">
+          <label>邮箱地址</label>
+          <input type="email" placeholder="zhang@email.com" id="f-email">
+        </div>
+        <div class="form-group">
+          <label>项目描述</label>
+          <textarea rows="5" placeholder="简单描述你的项目或想法..." id="f-msg"></textarea>
+        </div>
+        <button class="form-submit" onclick="handleSubmit()">发送消息 →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 你的名字 — 用代码与热情构建</p>
+  <p>设计 & 开发 by <a href="#">yourname</a></p>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursor-ring');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+  });
+
+  function animateRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  document.querySelectorAll('a, button, .project-card, .skill-card, .contact-link').forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Form submit
+  function handleSubmit() {
+    const name = document.getElementById('f-name').value;
+    const email = document.getElementById('f-email').value;
+    const msg = document.getElementById('f-msg').value;
+    if (!name || !email || !msg) {
+      alert('请填写所有字段');
+      return;
+    }
+    const btn = document.querySelector('.form-submit');
+    btn.textContent = '消息已发送 ✓';
+    btn.style.background = '#7ab87a';
+    btn.style.color = '#0f0f0e';
+    setTimeout(() => {
+      btn.textContent = '发送消息 →';
+      btn.style.background = '';
+      btn.style.color = '';
+      document.getElementById('f-name').value = '';
+      document.getElementById('f-email').value = '';
+      document.getElementById('f-msg').value = '';
+    }, 3000);
+  }
+</script>
+</body>
+</html>
