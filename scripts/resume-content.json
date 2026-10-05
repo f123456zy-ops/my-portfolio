@@ -1,0 +1,170 @@
+{
+  "profile": {
+    "name": "王泽毅",
+    "initials": "WZY",
+    "city": "宁波",
+    "roles": [
+      "摄影师",
+      "剪辑师",
+      "视觉设计师"
+    ],
+    "targetRoles": [
+      "摄影 / 摄像",
+      "视频剪辑",
+      "视觉设计",
+      "AI 内容生产"
+    ],
+    "positioning": "视觉创作 × AI 内容生产",
+    "statement": "以影像创作为基础，用 AI 构建可落地的内容系统。",
+    "summary": "视觉传达设计背景，具备摄影、剪辑、品牌视觉与内容运营经验。把 AI 放进真实生产流程，让创意从策略、生成、编辑走到最终交付。",
+    "portrait": "/assets/legacy/image-001.jpg"
+  },
+  "aiDeliverables": [
+    "公众号内容",
+    "AI 视频",
+    "产品详情页",
+    "品牌海报",
+    "自动化工作流"
+  ],
+  "aiMetrics": [
+    {
+      "id": "cost",
+      "value": "50%",
+      "label": "创作成本降低",
+      "detail": "AI 进入脚本、素材与后期链路"
+    },
+    {
+      "id": "weekly-output",
+      "value": "1 → 8",
+      "label": "周内容产量",
+      "detail": "标准化流程提升稳定交付能力"
+    },
+    {
+      "id": "reuse",
+      "value": "+300%",
+      "label": "素材复用率",
+      "detail": "同一素材适配多平台与多版式"
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "cap-ai",
+      "index": "01",
+      "title": "AI 内容生产与工作流搭建",
+      "description": "脚本策划、生成式素材、提示词设计、自动化编排与多平台适配。",
+      "tools": [
+        "ChatGPT",
+        "Gemini",
+        "Midjourney",
+        "即梦"
+      ]
+    },
+    {
+      "id": "cap-photo",
+      "index": "02",
+      "title": "摄影与影像制作",
+      "description": "人像、产品、活动与商业空间拍摄，兼顾布光、构图和现场节奏。",
+      "tools": [
+        "摄影",
+        "摄像",
+        "布光",
+        "现场执行"
+      ]
+    },
+    {
+      "id": "cap-editing",
+      "index": "03",
+      "title": "视频剪辑与后期",
+      "description": "短视频、品牌片与活动内容的结构剪辑、调色、字幕和声音处理。",
+      "tools": [
+        "Premiere Pro",
+        "After Effects",
+        "调色"
+      ]
+    },
+    {
+      "id": "cap-visual",
+      "index": "04",
+      "title": "视觉设计与品牌表达",
+      "description": "品牌 VI、海报、活动物料、详情页和社交媒体视觉的系统化延展。",
+      "tools": [
+        "Photoshop",
+        "Illustrator",
+        "C4D"
+      ]
+    },
+    {
+      "id": "cap-strategy",
+      "index": "05",
+      "title": "内容策略与运营协作",
+      "description": "从选题、对标和内容结构出发，连接创意、生产、复盘与持续优化。",
+      "tools": [
+        "公众号",
+        "视频号",
+        "抖音",
+        "小红书"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "id": "exp-bioforest",
+      "period": "2024.05 — 至今",
+      "company": "浙江贝优生物科技有限公司",
+      "role": "摄影师 · 剪辑师",
+      "summary": "负责护肤品牌影像、短视频与内容物料，并将 AI 引入脚本、素材和后期流程。",
+      "highlights": [
+        "周内容产量从 1 提升至 8",
+        "素材复用率提升 300%",
+        "创作成本降低 50%"
+      ]
+    },
+    {
+      "id": "exp-decode",
+      "period": "2024.02 — 2024.05",
+      "company": "宁波德克德家商业管理发展有限公司",
+      "role": "新媒体",
+      "summary": "统筹品牌矩阵内容，完成商业空间拍摄、视频剪辑、内容策划与视觉统一。",
+      "highlights": [
+        "单人支持多个账号内容生产",
+        "连接拍摄、剪辑与平台运营"
+      ]
+    },
+    {
+      "id": "exp-disai",
+      "period": "2023.02 — 2024.02",
+      "company": "宁波市迪赛控股集团有限公司",
+      "role": "设计师助理",
+      "summary": "参与地产、教育与城市更新项目的视觉物料、空间效果和影像内容制作。",
+      "highlights": [
+        "品牌视觉执行",
+        "C4D 空间表现",
+        "活动影像与后期"
+      ]
+    },
+    {
+      "id": "exp-education",
+      "period": "2019 — 2023",
+      "company": "湖州师范学院",
+      "role": "视觉传达设计 · 本科",
+      "summary": "专业排名前 5%，获得省政府奖学金、校级一等奖学金及省级数字艺术设计奖项。",
+      "highlights": [
+        "优秀毕业生",
+        "省级一等奖 ×2",
+        "视觉设计基础"
+      ]
+    }
+  ],
+  "contact": {
+    "heading": "期待新的工作机会",
+    "statement": "如果你正在寻找兼具影像审美、内容执行力与 AI 工作流能力的创作者，欢迎联系我。",
+    "email": "2364344055@qq.com",
+    "emailHref": "mailto:2364344055@qq.com",
+    "phone": "17816786664",
+    "phoneHref": "tel:17816786664",
+    "city": "宁波",
+    "wechatLabel": "扫码添加微信",
+    "qrPath": "/assets/legacy/image-053.jpg",
+    "resumePath": "/resume-wang-zeyi.pdf"
+  }
+}

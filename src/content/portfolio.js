@@ -1,5 +1,5 @@
-import { ASSET_MAP } from "./asset-map";
-import { validatePortfolioContent } from "../lib/content-guards";
+import { ASSET_MAP } from "./asset-map.js";
+import { validatePortfolioContent } from "../lib/content-guards.js";
 
 export { validatePortfolioContent };
 

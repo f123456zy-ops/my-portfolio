@@ -3,22 +3,22 @@ import { Header } from "./components/Header";
 import { Hero } from "./components/Hero";
 import { AIPractice } from "./components/AIPractice";
 import { Archive } from "./components/Archive";
+import { About } from "./components/About";
+import { Capabilities } from "./components/Capabilities";
+import { Experience } from "./components/Experience";
+import { JobContact } from "./components/JobContact";
 import { Projects } from "./components/Projects";
-import { Section } from "./components/Section";
 import {
   AI_DELIVERABLES,
   AI_METRICS,
   ARCHIVE_PROJECTS,
+  CAPABILITIES,
+  CONTACT,
+  EXPERIENCE,
   PAGE_SECTIONS,
   PROJECTS,
   SITE_PROFILE,
 } from "./content/portfolio";
-
-const SHELL_SECTIONS = [
-  { id: "about", eyebrow: "ABOUT", title: "关于与能力" },
-  { id: "experience", eyebrow: "EXPERIENCE", title: "经历" },
-  { id: "contact", eyebrow: "CONTACT", title: "期待新的工作机会" },
-];
 
 export function App() {
   return (
@@ -29,11 +29,10 @@ export function App() {
         <AIPractice deliverables={AI_DELIVERABLES} metrics={AI_METRICS} />
         <Projects items={PROJECTS} />
         <Archive items={ARCHIVE_PROJECTS} />
-        <div className="shell-preview" aria-hidden="true">
-          {SHELL_SECTIONS.map((section) => (
-            <Section key={section.id} {...section} className="shell-preview__section" />
-          ))}
-        </div>
+        <About profile={SITE_PROFILE} />
+        <Capabilities items={CAPABILITIES} />
+        <Experience items={EXPERIENCE} />
+        <JobContact contact={CONTACT} />
       </main>
       <Footer profile={SITE_PROFILE} />
     </div>
