@@ -7,23 +7,62 @@ export const SITE_PROFILE = Object.freeze({
   name: "王泽毅",
   initials: "WZY",
   city: "宁波",
-  roles: ["摄影师", "剪辑师", "视觉设计师"],
-  targetRoles: ["摄影 / 摄像", "视频剪辑", "视觉设计", "AI 内容生产"],
-  positioning: "视觉创作 × AI 内容生产",
-  statement: "以影像创作为基础，用 AI 构建可落地的内容系统。",
+  title: "新媒体内容运营（AI 内容方向）",
+  capabilityLine: "内容策划 · AI 内容生产 · 拍摄 · 剪辑 · 视觉设计",
+  roles: ["新媒体内容运营", "AI 内容生产", "拍摄与剪辑", "视觉设计"],
+  targetRoles: ["新媒体内容运营", "AI 内容生产", "品牌内容", "视觉内容"],
+  positioning: "新媒体内容运营 × AI 内容生产",
+  statement: "能把选题、内容、视觉和 AI 工具连接成可落地的新媒体生产流程。",
   summary:
-    "视觉传达设计背景，具备摄影、剪辑、品牌视觉与内容运营经验。把 AI 放进真实生产流程，让创意从策略、生成、编辑走到最终交付。",
+    "视觉传达设计背景，具备内容运营、摄影、剪辑与品牌视觉经验。把 AI 放进真实生产流程，让内容从策略、生成、编辑走到最终交付。",
+  jobSeekingStatement: "正在寻找新媒体内容运营、AI 内容生产及相关视觉内容岗位。",
   portrait: ASSET_MAP.portrait,
 });
 
 export const PAGE_SECTIONS = Object.freeze([
   "home",
-  "ai-practice",
-  "projects",
-  "archive",
+  "ai",
+  "work",
+  "career",
   "about",
-  "experience",
-  "contact",
+]);
+
+export const AI_WORKFLOW_STAGES = Object.freeze([
+  {
+    id: "strategy",
+    index: "01",
+    title: "选题与策略",
+    description: "研究对标内容，明确受众、平台目标、脚本结构和视觉方向。",
+    tools: ["内容规划", "脚本", "视觉方向"],
+  },
+  {
+    id: "generation",
+    index: "02",
+    title: "AI 生成",
+    description: "使用生成式工具完成文案、图像、视频和可供筛选的素材变体。",
+    tools: ["ChatGPT", "Gemini", "Midjourney", "即梦"],
+  },
+  {
+    id: "production",
+    index: "03",
+    title: "拍摄与编辑",
+    description: "结合实拍、素材筛选、剪辑、调色、排版与人工校正完成内容。",
+    tools: ["摄影", "Premiere Pro", "After Effects"],
+  },
+  {
+    id: "adaptation",
+    index: "04",
+    title: "多平台适配",
+    description: "把同一内容系统延展到公众号、视频、详情页、海报与社交封面。",
+    tools: ["公众号", "视频号", "抖音", "小红书"],
+  },
+  {
+    id: "review",
+    index: "05",
+    title: "发布与复盘",
+    description: "沉淀素材、管理版本并复用有效流程，为下一轮内容提供依据。",
+    tools: ["素材归档", "版本管理", "流程复用"],
+  },
 ]);
 
 export const AI_METRICS = Object.freeze([
@@ -131,6 +170,50 @@ export const PROJECTS = Object.freeze([
   },
 ]);
 
+export const FEATURED_CASES = Object.freeze([
+  {
+    id: "biocare-ai-film",
+    discipline: "AI VIDEO / BRAND CONTENT",
+    title: "BIOCARE AI 品牌视频",
+    period: "2024 — 至今",
+    role: "创意策划、AI 画面、剪辑与后期",
+    context: "围绕护肤品牌的自然理念，把产品信息与生成式视觉整合为可直接发布的短片。",
+    responsibilities: ["梳理内容主题与脚本", "生成并筛选视觉素材", "完成剪辑、调色与声音后期"],
+    process: ["确定品牌语气与画面方向", "生成素材并人工校正", "与实拍及产品信息合成成片"],
+    outcome: "建立脚本—素材—后期的标准化制作链路，让 AI 画面真正进入品牌内容交付。",
+    image: ASSET_MAP.aiVideoPoster,
+    video: ASSET_MAP.aiVideo,
+    alt: "BIOCARE 森林主题 AI 品牌视频画面",
+  },
+  {
+    id: "biocare-content-system",
+    discipline: "CONTENT OPERATIONS / VISUAL",
+    title: "护肤品牌内容矩阵",
+    period: "2024 — 至今",
+    role: "内容策划、产品摄影、视觉设计与多平台适配",
+    context: "围绕产品、知识科普与传播节点，持续组织公众号、详情页、海报和短视频内容。",
+    responsibilities: ["规划选题与内容结构", "完成产品拍摄和视觉设计", "根据平台调整版式与表达"],
+    process: ["拆解产品卖点和受众问题", "建立可复用的素材与版式", "多平台发布并持续沉淀资产"],
+    outcome: "周内容产量从 1 提升至 8，素材复用率提升 300%，同时保持品牌视觉一致。",
+    image: ASSET_MAP.biocareProduct,
+    alt: "BIOCARE 护肤品牌多平台内容视觉",
+  },
+  {
+    id: "brand-space-film",
+    discipline: "PHOTOGRAPHY / EDITING",
+    title: "品牌空间与活动影像",
+    period: "2024",
+    role: "现场拍摄、镜头设计与剪辑",
+    context: "在商业空间和品牌活动现场，把环境、人物状态与品牌信息组织成完整影像。",
+    responsibilities: ["制定现场拍摄重点", "完成摄影摄像与素材筛选", "负责结构剪辑和后期交付"],
+    process: ["现场观察并规划镜头", "捕捉空间与人物关系", "按传播节奏完成成片"],
+    outcome: "独立连接现场执行与后期表达，兼顾空间质感、人物状态和品牌信息。",
+    image: ASSET_MAP.eventFilmPoster,
+    video: ASSET_MAP.eventFilm,
+    alt: "品牌空间与活动现场影像",
+  },
+]);
+
 export const ARCHIVE_PROJECTS = Object.freeze([
   {
     id: "archive-wanderer",
@@ -182,6 +265,8 @@ export const ARCHIVE_PROJECTS = Object.freeze([
   },
 ]);
 
+export const VISUAL_ARCHIVE = ARCHIVE_PROJECTS;
+
 export const CAPABILITIES = Object.freeze([
   {
     id: "cap-ai",
@@ -220,6 +305,44 @@ export const CAPABILITIES = Object.freeze([
   },
 ]);
 
+export const ROLE_SKILLS = Object.freeze([
+  {
+    id: "skill-ai",
+    index: "01",
+    title: "AI 内容生产与工作流",
+    description: "把生成式工具接入选题、脚本、素材、审核、后期和多平台交付。",
+    tools: ["ChatGPT", "Gemini", "Midjourney", "即梦"],
+  },
+  {
+    id: "skill-operations",
+    index: "02",
+    title: "新媒体内容策划与运营",
+    description: "从受众和平台目标出发，完成选题、内容结构、发布适配与复盘。",
+    tools: ["公众号", "视频号", "抖音", "小红书"],
+  },
+  {
+    id: "skill-photo",
+    index: "03",
+    title: "摄影与摄像",
+    description: "完成人像、产品、活动与商业空间拍摄，兼顾布光、构图和现场节奏。",
+    tools: ["摄影", "摄像", "布光", "现场执行"],
+  },
+  {
+    id: "skill-editing",
+    index: "04",
+    title: "视频剪辑与后期",
+    description: "负责短视频、品牌片与活动内容的结构剪辑、调色、字幕和声音处理。",
+    tools: ["Premiere Pro", "After Effects", "调色"],
+  },
+  {
+    id: "skill-visual",
+    index: "05",
+    title: "视觉设计与品牌表达",
+    description: "系统延展品牌 VI、海报、活动物料、详情页和社交媒体视觉。",
+    tools: ["Photoshop", "Illustrator", "C4D"],
+  },
+]);
+
 export const EXPERIENCE = Object.freeze([
   {
     id: "exp-bioforest",
@@ -254,6 +377,8 @@ export const EXPERIENCE = Object.freeze([
     highlights: ["优秀毕业生", "省级一等奖 ×2", "视觉设计基础"],
   },
 ]);
+
+export const CAREER = EXPERIENCE;
 
 export const CONTACT = Object.freeze({
   heading: "期待新的工作机会",
