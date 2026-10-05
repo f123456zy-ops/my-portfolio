@@ -15,5 +15,8 @@ export default defineConfig({
       clientFiles: ["./src/main.jsx"],
     },
   },
+  test: {
+    exclude: ["**/.worktrees/**", "**/dist/**", "**/node_modules/**"],
+  },
   plugins: [react()],
 });

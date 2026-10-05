@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build && node scripts/prepare-sites-build.mjs",
     "preview": "vite preview",
-    "test": "vitest run src --passWithNoTests",
+    "test": "node --test tests/test-scope.test.mjs && vitest run src --passWithNoTests",
     "test:sites": "node --test tests/sites-worker.test.mjs"
   },
   "dependencies": {
