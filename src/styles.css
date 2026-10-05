@@ -5,6 +5,7 @@
   --ivory-bright: #fffdf8;
   --cobalt: #1747ff;
   --cobalt-deep: #1036c9;
+  --cobalt-on-dark: #8aa3ff;
   --gray-900: #25272d;
   --gray-700: #5e626b;
   --gray-500: #8e9299;
@@ -473,7 +474,7 @@ button {
   right: 18px;
   margin: 0;
   color: rgba(255, 255, 255, 0.46);
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   letter-spacing: 0.18em;
   transform: translate(42%, -50%) rotate(90deg);
 }
@@ -485,7 +486,7 @@ button {
   display: flex;
   gap: 28px;
   color: rgba(255, 255, 255, 0.46);
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   letter-spacing: 0.14em;
 }
 
@@ -496,7 +497,7 @@ button {
   padding-bottom: 8px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.55);
   color: rgba(255, 255, 255, 0.76);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   letter-spacing: 0.16em;
   text-decoration: none;
 }
@@ -584,7 +585,7 @@ button {
   min-height: 5.2em;
   margin: 0 0 24px;
   color: var(--gray-700);
-  font-size: 0.925rem;
+  font-size: 1rem;
 }
 
 .ai-system__stages ul,
@@ -629,7 +630,7 @@ button {
 
 .ai-system__metric strong {
   margin-bottom: auto;
-  color: var(--cobalt);
+  color: var(--cobalt-on-dark);
   font-family: var(--display);
   font-size: clamp(4rem, 7vw, 7rem);
   font-weight: 400;
@@ -645,7 +646,7 @@ button {
 .ai-system__metric p {
   margin: 0;
   color: rgba(255, 255, 255, 0.54);
-  font-size: 0.85rem;
+  font-size: 1rem;
 }
 
 .ai-system__deliverables {
@@ -678,7 +679,7 @@ button {
 
 .ai-system__tabs button span {
   color: var(--gray-500);
-  font-size: 0.7rem;
+  font-size: 0.75rem;
 }
 
 .ai-system__tabs button[aria-selected="true"] {
@@ -778,6 +779,7 @@ button {
 
 .featured-cases__heading > .section__eyebrow {
   grid-column: 1 / 4;
+  color: var(--cobalt-on-dark);
 }
 
 .featured-cases__heading > div {
@@ -817,6 +819,7 @@ button {
   background: var(--ink-soft);
   color: #fff;
   cursor: pointer;
+  min-width: 0;
 }
 
 .featured-cases__case[data-layout="offset"] .featured-cases__media {
@@ -847,12 +850,13 @@ button {
   bottom: 16px;
   padding: 5px 8px;
   background: var(--cobalt);
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   letter-spacing: 0.13em;
 }
 
 .featured-cases__copy {
   grid-column: 9 / 13;
+  min-width: 0;
   padding-bottom: 4px;
 }
 
@@ -868,7 +872,7 @@ button {
   padding-top: 14px;
   border-top: 1px solid var(--line-dark);
   color: rgba(255, 255, 255, 0.52);
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   letter-spacing: 0.1em;
 }
 
@@ -883,10 +887,11 @@ button {
   font-weight: 400;
   letter-spacing: -0.055em;
   line-height: 1;
+  overflow-wrap: anywhere;
 }
 
 .featured-cases__role {
-  color: var(--cobalt);
+  color: var(--cobalt-on-dark);
   font-weight: 650;
 }
 
@@ -938,7 +943,7 @@ button {
 .featured-cases__archive summary span:last-child {
   color: var(--gray-500);
   font-family: var(--sans);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   letter-spacing: 0.12em;
 }
 
@@ -974,7 +979,7 @@ button {
 .featured-cases__archive-grid article > p {
   margin: 15px 0 3px;
   color: var(--gray-500);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   letter-spacing: 0.08em;
 }
 
@@ -1029,7 +1034,7 @@ button {
 .case-dialog__header > p {
   margin: 0;
   color: var(--gray-500);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   letter-spacing: 0.1em;
 }
 
@@ -1069,7 +1074,7 @@ button {
 
 .case-dialog__body > section h3 {
   margin: 0 0 24px;
-  color: var(--cobalt);
+  color: var(--cobalt-on-dark);
   font-size: 0.75rem;
   letter-spacing: 0.12em;
 }
@@ -1218,14 +1223,14 @@ button {
 
 .career-profile__skills article > span {
   color: var(--cobalt);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   letter-spacing: 0.1em;
 }
 
 .career-profile__skills article p {
   margin: 10px 0 18px;
   color: var(--gray-700);
-  font-size: 0.925rem;
+  font-size: 1rem;
 }
 
 /* Personal finish and contact */
@@ -1266,6 +1271,7 @@ button {
 
 .profile-contact__content {
   grid-column: 8 / 13;
+  min-width: 0;
   min-height: 100%;
   display: flex;
   flex-direction: column;
@@ -1306,6 +1312,7 @@ button {
 }
 
 .profile-contact__actions > a:not(.button) {
+  min-width: 0;
   display: flex;
   align-items: baseline;
   justify-content: space-between;
@@ -1313,6 +1320,11 @@ button {
   padding: 18px 0;
   border-top: 1px solid rgba(255, 255, 255, 0.28);
   text-decoration: none;
+}
+
+.profile-contact__actions strong {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .profile-contact__actions > a span,
@@ -1530,8 +1542,8 @@ html[data-motion-ready] main > section[data-revealed] [data-reveal] {
 
   .site-header {
     min-height: 62px;
-    grid-template-columns: 1fr auto;
-    gap: 10px;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    gap: 6px;
     padding-inline: 18px;
   }
 
@@ -1540,11 +1552,17 @@ html[data-motion-ready] main > section[data-revealed] [data-reveal] {
   }
 
   .site-header__toggle {
-    grid-column: 2;
+    grid-column: 3;
+    grid-row: 1;
   }
 
   .button--header {
-    display: none;
+    grid-column: 2;
+    grid-row: 1;
+    min-height: 40px;
+    padding-inline: 10px;
+    font-size: 0.875rem;
+    white-space: nowrap;
   }
 
   .hero {
@@ -1603,7 +1621,7 @@ html[data-motion-ready] main > section[data-revealed] [data-reveal] {
   .hero__actions .button {
     min-width: 0;
     padding-inline: 12px;
-    font-size: 0.8rem;
+    font-size: 0.875rem;
   }
 
   .hero__rail,
@@ -1709,6 +1727,13 @@ html[data-motion-ready] main > section[data-revealed] [data-reveal] {
     display: flex;
     flex-direction: column;
     gap: 30px;
+  }
+
+  .featured-cases__case > *,
+  .featured-cases__heading > div,
+  .profile-contact__actions > a:not(.button),
+  .profile-contact__wechat > * {
+    min-width: 0;
   }
 
   .featured-cases__media,
@@ -1839,7 +1864,7 @@ html[data-motion-ready] main > section[data-revealed] [data-reveal] {
 
   .hero__actions .button {
     padding-inline: 8px;
-    font-size: 0.72rem;
+    font-size: 0.875rem;
   }
 
   .featured-cases__archive-grid {
@@ -1848,6 +1873,11 @@ html[data-motion-ready] main > section[data-revealed] [data-reveal] {
 
   .profile-contact__actions > a:not(.button) {
     display: grid;
+    justify-content: stretch;
+  }
+
+  .profile-contact__actions > a:not(.button) strong {
+    text-align: left;
   }
 }
 

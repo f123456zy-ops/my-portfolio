@@ -46,4 +46,16 @@ describe("IntroCurtain", () => {
     const { container } = render(<IntroCurtain />);
     expect(container).toBeEmptyDOMElement();
   });
+
+  it("keeps the site renderable when session storage is blocked", () => {
+    vi.spyOn(Storage.prototype, "getItem").mockImplementation(() => {
+      throw new DOMException("Storage is blocked", "SecurityError");
+    });
+    vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
+      throw new DOMException("Storage is blocked", "SecurityError");
+    });
+
+    expect(() => render(<IntroCurtain />)).not.toThrow();
+    expect(screen.getByText("WZY")).toBeInTheDocument();
+  });
 });

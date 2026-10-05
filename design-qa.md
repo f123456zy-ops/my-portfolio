@@ -13,7 +13,7 @@ The visual system is deliberately job-first: the hero names the target role, AI 
 - Mobile viewport target: 390 × 844 CSS px.
 - Mobile captured page area: `work/qa/hr-redesign-mobile.png` — 375 × 812 px after scrollbar and browser viewport chrome.
 - Narrow responsive check: 320 × 720 CSS px.
-- 200% desktop text/reflow equivalent: 720 × 900 CSS px.
+- True 200% text enlargement: 320 × 720 CSS px with a 32 px root font.
 - Local implementation URL: `http://127.0.0.1:4173/`.
 
 ## Baseline and corrective loop
@@ -32,6 +32,9 @@ After the five-chapter React shell replaced the previous sections, the legacy st
 - Limited motion to the 0.87-second session intro, short mask/opacity/translation reveals, image scale on intent, and section-aware navigation transitions.
 - Added complete reduced-motion overrides and preserved all content on poster/video failure.
 - Tightened the narrow hero so both project and résumé actions remain in the 320 px first viewport.
+- Kept a compact résumé action persistently visible in the mobile header.
+- Added shrinkable project/contact containers, long-label wrapping, and a lighter blue text token for accessible contrast on dark surfaces.
+- Guarded session storage access so privacy-blocked storage cannot interrupt the application render.
 
 ## Visual review
 
@@ -46,7 +49,7 @@ After the five-chapter React shell replaced the previous sections, the legacy st
 - 1440 px: `clientWidth === scrollWidth` at 1425 px; no horizontal overflow.
 - 390 px: `clientWidth === scrollWidth` at 375 px; hero height is exactly 844 px; the résumé action ends at 557.5 px and remains in the first viewport.
 - 320 px: `clientWidth === scrollWidth` at 305 px; hero height is 720.43 px; the résumé action begins at 574.43 px and remains operable in the first viewport.
-- 200% equivalent: at 705 px content width, `clientWidth === scrollWidth`; career copy and all contact links remain visible and operable.
+- True 200% text enlargement at 320 px: with a 32 px root font, `clientWidth === scrollWidth` at 305 px; case media/copy and contact content remain within the 292 px page column, while the persistent résumé action remains visible.
 - Mobile menu: toggles to `aria-expanded="true"` and displays the four approved navigation labels.
 - AI tabs: selecting `02 视频` updates both selected state and the single tabpanel to `AI 视频`.
 - Case layer: opens as a named modal, renders all five required evidence sections, and uses `preload="metadata"` for video.
@@ -58,7 +61,7 @@ After the five-chapter React shell replaced the previous sections, the legacy st
 
 - P0: none.
 - P1: none.
-- P2: none after the mobile first-viewport correction.
+- P2: none after correcting enlarged-text clipping, dark-surface text contrast, and the persistent mobile résumé action found during independent review.
 - P3: the supplied hero footage includes its own embedded English typography. The overlay remains legible across tested frames; a future clean master would provide more control but is not required for this release.
 
 ## Final status

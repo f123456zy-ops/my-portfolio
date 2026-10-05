@@ -3,15 +3,31 @@ import { useReducedMotion } from "../hooks/useReducedMotion";
 
 const INTRO_SESSION_KEY = "wzy-intro-seen";
 
+function hasSeenIntro() {
+  if (typeof window === "undefined") return false;
+
+  try {
+    return window.sessionStorage.getItem(INTRO_SESSION_KEY) === "true";
+  } catch {
+    return false;
+  }
+}
+
+function rememberIntro() {
+  try {
+    window.sessionStorage.setItem(INTRO_SESSION_KEY, "true");
+  } catch {
+    // Storage can be disabled by privacy settings; the intro still works for this render.
+  }
+}
+
 export function IntroCurtain() {
   const reducedMotion = useReducedMotion();
-  const [visible, setVisible] = useState(
-    () => typeof window === "undefined" || window.sessionStorage.getItem(INTRO_SESSION_KEY) !== "true",
-  );
+  const [visible, setVisible] = useState(() => !hasSeenIntro());
 
   useEffect(() => {
     if (visible && !reducedMotion) {
-      window.sessionStorage.setItem(INTRO_SESSION_KEY, "true");
+      rememberIntro();
     }
   }, [reducedMotion, visible]);
 
