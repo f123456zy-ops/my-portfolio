@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowDown, ArrowRight, DownloadSimple } from "@phosphor-icons/react";
 import { useScrollProgress } from "../hooks/useScrollProgress";
 
@@ -29,16 +29,44 @@ export function Hero({ profile }) {
   const scrollProgress = useScrollProgress(sectionRef);
   const mediaState = resolveHeroMediaState({ loaded, failed, reducedMotion });
 
-  useEffect(() => {
-    if (!loaded || !mediaState.shouldPlay || !videoRef.current) {
+  const attemptPlayback = useCallback(() => {
+    const video = videoRef.current;
+    if (!video || !mediaState.shouldPlay) {
       return;
     }
 
-    const playback = videoRef.current.play();
+    video.muted = true;
+    video.setAttribute("muted", "");
+    const playback = video.play();
     if (playback && typeof playback.catch === "function") {
-      playback.catch(() => setFailed(true));
+      playback.catch(() => {
+        // A browser may reject an early autoplay attempt while media is still
+        // becoming playable. Keep the poster in place and retry on canplay.
+      });
     }
-  }, [loaded, mediaState.shouldPlay]);
+  }, [mediaState.shouldPlay]);
+
+  useEffect(() => {
+    if (!loaded || !mediaState.shouldPlay) {
+      return;
+    }
+
+    attemptPlayback();
+
+    const resumePlayback = () => {
+      if (document.visibilityState === "visible") {
+        attemptPlayback();
+      }
+    };
+
+    document.addEventListener("visibilitychange", resumePlayback);
+    window.addEventListener("pageshow", resumePlayback);
+
+    return () => {
+      document.removeEventListener("visibilitychange", resumePlayback);
+      window.removeEventListener("pageshow", resumePlayback);
+    };
+  }, [attemptPlayback, loaded, mediaState.shouldPlay]);
 
   return (
     <section
@@ -68,11 +96,12 @@ export function Hero({ profile }) {
           loop
           autoPlay
           playsInline
-          preload="metadata"
+          preload="auto"
           tabIndex={-1}
           aria-hidden="true"
           data-video-ready={mediaState.videoReady || undefined}
           onLoadedData={() => setLoaded(true)}
+          onCanPlay={attemptPlayback}
           onError={() => setFailed(true)}
         >
           <source
