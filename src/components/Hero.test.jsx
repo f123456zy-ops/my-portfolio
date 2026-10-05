@@ -9,6 +9,7 @@ import { Hero } from "./Hero";
 afterEach(() => {
   cleanup();
   vi.restoreAllMocks();
+  vi.unstubAllGlobals();
 });
 
 describe("job-first video hero", () => {
@@ -71,6 +72,51 @@ describe("job-first video hero", () => {
 
     await waitFor(() => expect(video.paused).toBe(false));
     expect(container.querySelector(".hero__poster")).not.toHaveAttribute("data-visible");
+  });
+
+  it("reveals the video when mobile Safari reports canplay without loadeddata", async () => {
+    vi.spyOn(window.HTMLMediaElement.prototype, "play").mockResolvedValue(undefined);
+    const { container } = render(<Hero profile={SITE_PROFILE} />);
+    const video = container.querySelector("video");
+
+    fireEvent.canPlay(video);
+
+    await waitFor(() => expect(video).toHaveAttribute("data-video-ready", "true"));
+    expect(container.querySelector(".hero__poster")).not.toHaveAttribute("data-visible");
+  });
+
+  it("offers user-initiated playback when the device reduces motion", async () => {
+    vi.stubGlobal(
+      "matchMedia",
+      vi.fn().mockReturnValue({ matches: true }),
+    );
+    const play = vi
+      .spyOn(window.HTMLMediaElement.prototype, "play")
+      .mockResolvedValue(undefined);
+    const { container } = render(<Hero profile={SITE_PROFILE} />);
+
+    expect(container.querySelector("video")).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "播放背景视频" }));
+
+    await waitFor(() => expect(play).toHaveBeenCalled());
+    expect(container.querySelector("video")).toHaveAttribute("data-video-ready", "true");
+  });
+
+  it("offers a play control when a mobile browser blocks autoplay", async () => {
+    const play = vi
+      .spyOn(window.HTMLMediaElement.prototype, "play")
+      .mockRejectedValue(new DOMException("Autoplay is blocked", "NotAllowedError"));
+    const { container } = render(<Hero profile={SITE_PROFILE} />);
+    const video = container.querySelector("video");
+
+    fireEvent.canPlay(video);
+    const control = await screen.findByRole("button", { name: "播放背景视频" });
+
+    play.mockResolvedValue(undefined);
+    fireEvent.click(control);
+
+    await waitFor(() => expect(control).not.toBeInTheDocument());
+    expect(video).toHaveAttribute("data-video-ready", "true");
   });
 
   it("resumes playback when the document returns to the foreground", async () => {

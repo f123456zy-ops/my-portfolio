@@ -26,8 +26,15 @@ export function Hero({ profile }) {
   const [loaded, setLoaded] = useState(false);
   const [failed, setFailed] = useState(false);
   const [reducedMotion] = useState(motionIsReduced);
+  const [motionEnabled, setMotionEnabled] = useState(false);
+  const [playbackBlocked, setPlaybackBlocked] = useState(false);
   const scrollProgress = useScrollProgress(sectionRef);
-  const mediaState = resolveHeroMediaState({ loaded, failed, reducedMotion });
+  const motionPaused = reducedMotion && !motionEnabled;
+  const mediaState = resolveHeroMediaState({
+    loaded,
+    failed,
+    reducedMotion: motionPaused,
+  });
 
   const attemptPlayback = useCallback(() => {
     const video = videoRef.current;
@@ -38,13 +45,38 @@ export function Hero({ profile }) {
     video.muted = true;
     video.setAttribute("muted", "");
     const playback = video.play();
-    if (playback && typeof playback.catch === "function") {
-      playback.catch(() => {
-        // A browser may reject an early autoplay attempt while media is still
-        // becoming playable. Keep the poster in place and retry on canplay.
-      });
+    if (playback && typeof playback.then === "function") {
+      playback
+        .then(() => setPlaybackBlocked(false))
+        .catch((error) => {
+          if (error?.name === "NotAllowedError") {
+            setPlaybackBlocked(true);
+          }
+        });
     }
   }, [mediaState.shouldPlay]);
+
+  const startPlayback = () => {
+    const video = videoRef.current;
+    if (!video) {
+      return;
+    }
+
+    setMotionEnabled(true);
+    setLoaded(true);
+    video.defaultMuted = true;
+    video.muted = true;
+    video.setAttribute("muted", "");
+    const playback = video.play();
+    if (playback && typeof playback.then === "function") {
+      playback
+        .then(() => setPlaybackBlocked(false))
+        .catch(() => {
+          setMotionEnabled(false);
+          setPlaybackBlocked(true);
+        });
+    }
+  };
 
   useEffect(() => {
     if (!loaded || !mediaState.shouldPlay) {
@@ -108,32 +140,39 @@ export function Hero({ profile }) {
         aria-hidden="true"
         data-visible={mediaState.showPoster || undefined}
       />
-      {!reducedMotion && (
-        <video
-          ref={videoRef}
-          className="hero__video"
-          data-parallax
-          poster="/assets/hero-cinematic-poster.jpg"
-          muted
-          loop
-          autoPlay
-          playsInline
-          preload="auto"
-          tabIndex={-1}
-          aria-hidden="true"
-          data-video-ready={mediaState.videoReady || undefined}
-          data-video-failed={failed || undefined}
-          onLoadedData={() => setLoaded(true)}
-          onCanPlay={attemptPlayback}
-          onError={() => setFailed(true)}
-        >
-          <source
-            src="/videos/hero-cinematic-mobile.mp4"
-            media="(max-width: 767px)"
-            type="video/mp4"
-          />
-          <source src="/videos/hero-cinematic-desktop.mp4" type="video/mp4" />
-        </video>
+      <video
+        ref={videoRef}
+        className="hero__video"
+        data-parallax
+        poster="/assets/hero-cinematic-poster.jpg"
+        muted
+        loop
+        autoPlay
+        playsInline
+        preload="auto"
+        tabIndex={-1}
+        aria-hidden="true"
+        data-video-ready={mediaState.videoReady || undefined}
+        data-video-failed={failed || undefined}
+        onLoadedData={() => setLoaded(true)}
+        onCanPlay={() => {
+          setLoaded(true);
+          attemptPlayback();
+        }}
+        onError={() => setFailed(true)}
+      >
+        <source
+          src="/videos/hero-cinematic-mobile.mp4"
+          media="(max-width: 767px)"
+          type="video/mp4"
+        />
+        <source src="/videos/hero-cinematic-desktop.mp4" type="video/mp4" />
+      </video>
+      {(motionPaused || playbackBlocked) && !failed && (
+        <button className="hero__video-control" type="button" onClick={startPlayback}>
+          <span aria-hidden="true">▶</span>
+          播放背景视频
+        </button>
       )}
       <div className="hero__veil" aria-hidden="true" />
 
