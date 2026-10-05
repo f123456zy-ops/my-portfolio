@@ -19,9 +19,13 @@ export function IntroCurtain() {
         }
       }}
     >
-      <span />
-      <span />
-      <span />
+      <div className="intro-curtain__credit">
+        <strong>WZY</strong>
+        <span>VISUAL STORY / 2026</span>
+      </div>
+      <span className="intro-curtain__panel" />
+      <span className="intro-curtain__panel" />
+      <span className="intro-curtain__panel" />
     </div>
   );
 }

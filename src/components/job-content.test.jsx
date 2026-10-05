@@ -12,10 +12,11 @@ describe("job-focused profile sections", () => {
     render(<App />);
 
     expect(screen.getByRole("heading", { name: "期待新的工作机会" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "下载简历" })).toHaveAttribute(
-      "href",
-      "/resume-wang-zeyi.pdf",
-    );
+    const resumeLinks = screen.getAllByRole("link", { name: "下载简历" });
+    expect(resumeLinks).toHaveLength(2);
+    for (const link of resumeLinks) {
+      expect(link).toHaveAttribute("href", "/resume-wang-zeyi.pdf");
+    }
     expect(screen.queryByText(/商业合作|合作咨询|客户/)).not.toBeInTheDocument();
     expect(screen.getByText("AI 内容生产与工作流搭建")).toBeInTheDocument();
   });

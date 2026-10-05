@@ -1,98 +1,82 @@
-# Design QA — 王泽毅个人求职网站
+# Design QA — 王泽毅电影感个人求职网站
 
 ## Comparison target and evidence
 
-- Source visual truth: `/Users/lnn/.codex/generated_images/01a0d2ac-1f58-7462-9d86-56daaaa63e04/exec-e188a926-9a01-4fef-b58f-5d9a2c4bd50e.png`
-- Saved source copy: `work/qa/reference-option-3.png`
-- Desktop implementation: `work/qa/implementation-desktop.png`
-- Mobile implementation: `work/qa/implementation-mobile.png`
-- Full comparison board: `work/qa/comparison-full.png`
-- Focused hero comparison: `work/qa/comparison-hero.png`
-- Focused implementation evidence: `work/qa/focus-ai.png`, `work/qa/focus-projects.png`, `work/qa/focus-contact.png`
+- Primary cinematic source visual: `/Users/lnn/.codex/generated_images/01a0d2ac-1f58-7462-9d86-56daaaa63e04/exec-c89e7a01-c1a1-4724-bfce-c0ac09c78092.png`
+- Editorial system source visual: `/Users/lnn/.codex/generated_images/01a0d2ac-1f58-7462-9d86-56daaaa63e04/exec-f56beec6-f251-4c34-ac42-81ffb1bb6588.png`
+- Desktop implementation: `work/qa/implementation-cinematic-desktop.png`
+- Mobile implementation: `work/qa/implementation-cinematic-mobile.png`
+- Full cinematic comparison: `work/qa/comparison-cinematic-full.png`
+- Full editorial comparison: `work/qa/comparison-editorial-full.png`
 - Implementation URL: `http://127.0.0.1:4173/`
 
 ## Viewports, dimensions, and normalization
 
-- Source board: 823 × 1912 px, conceptual long-page composition, 1× density.
-- Desktop: 1440 × 1024 CSS viewport; captured browser content is 1425 × 1013 px because the in-app browser reserves native scrollbar space; 1× density.
-- Mobile: 390 × 844 CSS viewport; document client width is 375 px with native scrollbar space; no horizontal overflow. The in-app browser compositor returned a half-scale content region in a 375 × 844 raw capture, so the visible 188 × 422 region was normalized to 376 × 844 with Lanczos scaling. No content was redrawn or generated during normalization.
-- Additional narrow-width check: 320 × 800 viewport, 305 px client width, 305 px scroll width after the fix; horizontal overflow = 0.
-- State: default light/dark alternating theme, hero at top, no dialog open; focused captures cover AI Practice, Projects, and Contact.
+- Cinematic source: 1487 × 1058 px.
+- Editorial source: 1487 × 1058 px.
+- Desktop implementation: 1269 × 856 px browser capture.
+- Mobile implementation: 375 × 812 px rendered browser capture from a 390 × 844 CSS viewport. The page measured 375 px client width and 375 px scroll width, so horizontal overflow was 0.
+- Full comparison boards normalize both source and implementation frames to 1265 × 844 px with proportional scaling before horizontal composition. No visual content was redrawn or generated during normalization.
+- State: hero at top after the intro curtain; desktop comparison shows the full cinematic hero, while mobile evidence verifies the responsive portrait crop and compact navigation.
 
-The source is a conceptual art-direction board rather than a same-viewport production screenshot. The comparison therefore judges hierarchy, visual language, section rhythm, typography, color, imagery, and interaction intent instead of claiming pixel-level identity.
+The approved direction combines two references rather than copying a single page: the hero adopts the full-bleed cinematic title sequence, while the header and following sections use the editorial reference's whitespace, grid, typography, and cobalt accent. Fidelity is therefore judged against the approved visual system, hierarchy, motion language, and responsive intent.
 
 ## Full-view comparison evidence
 
-`work/qa/comparison-full.png` places the complete source board on the left and the browser-rendered hero, AI Practice, Projects, and Contact states on the right in one comparison image. The implementation preserves the source direction: dark cinematic hero, warm ivory editorial sections, cobalt action color, large Chinese display type, strong alternating light/dark rhythm, restrained borders, and direct job-seeking calls to action.
+`work/qa/comparison-cinematic-full.png` compares the primary cinematic source with the browser-rendered hero. Both use full-bleed moving imagery, a dark filmic veil, oversized lower-left display type, restrained chapter metadata, and a high-contrast cobalt action.
 
-The implementation intentionally uses real portfolio footage in the hero instead of the generated photographer portrait shown in the concept. This follows the approved specification requiring a real video or work image as the visual subject and improves evidence of actual delivery capability.
+`work/qa/comparison-editorial-full.png` compares the editorial source with the same implementation state. Its influence is deliberately expressed through the adaptive light header and the warm-ivory content system below the hero rather than through a white frame around the film image.
+
+The desktop hero is the focused comparison surface because it contains the highest-risk elements: live footage, layered title typography, navigation contrast, chapter metadata, and CTA placement. The mobile implementation capture is the responsive focused evidence because the portrait crop, typography wrapping, navigation menu, and no-overflow behavior cannot be judged from the desktop reference alone.
 
 ## Required fidelity surfaces
 
-- Fonts and typography: Chinese display headings use the specified serif stack with restrained sans-serif UI and body copy. Weight, line height, hierarchy, and wrapping remain readable at desktop, 390 px, and 320 px. No truncation was found. Cross-platform self-hosting of the display face remains a P3 refinement.
-- Spacing and layout rhythm: the 1320 px desktop grid, large editorial section spacing, project alternation, and mobile linear flow preserve the reference's premium pacing. Header, cards, QR block, and CTA groups remain aligned and usable.
-- Colors and visual tokens: ink black, warm ivory, white, muted gray, and cobalt blue map consistently across hero, AI metrics, selected work, capabilities, and contact. Contrast is strong in the tested default and reduced-motion states.
-- Image quality and asset fidelity: all visible work uses real extracted portfolio imagery or existing video/poster assets. No placeholder, emoji, CSS illustration, handcrafted SVG, or generated stand-in is used. Browser checks found no broken loaded images; below-fold lazy images load when visited.
-- Copy and content: the site consistently names 王泽毅, leads with “视觉创作 × AI 内容生产,” places AI Practice directly after the hero, and uses job-seeking language only. No commercial-client or collaborator CTA remains.
-- Icons: Phosphor icons share a consistent stroke family, align with text baselines, and remain legible at mobile sizes.
-- States and interactions: active navigation, mobile menu, AI tabs, modal open/close, video playback, resume download, email/phone links, QR code, focus styles, and reduced-motion fallback were checked.
-- Accessibility: semantic headings, tabs, dialog, labels, alt text, visible keyboard focus, 44 px mobile menu target, keyboard tab navigation, Escape close, and `prefers-reduced-motion` fallback are present.
+- Fonts and typography: the hero uses oversized condensed sans-serif display type with a mask reveal; content sections retain the large editorial serif hierarchy. Body/UI text uses a neutral sans-serif stack. The tested desktop and mobile states show no clipping or unintended truncation.
+- Spacing and layout rhythm: the hero follows a strict left/right cinematic grid, while the body preserves generous editorial whitespace. Chapter labels, footer metadata, title, and CTAs remain aligned at both breakpoints.
+- Colors and visual tokens: ink black, warm ivory, white, muted gray, and cobalt blue are applied consistently. The header transitions from translucent dark over video to a light editorial surface after leaving the hero.
+- Image and video quality: the supplied HEVC master was converted into web-safe H.264 variants: 1920 × 1080 desktop and 720 × 1280 mobile, both silent, fast-start, and below the repository's asset-size guard. A 1920 × 1080 poster provides the first-frame and reduced-motion fallback. No placeholder media is used.
+- Copy and content: the site consistently names 王泽毅, prioritizes AI 内容生产, and remains explicitly job-seeking. The hero adds `CHAPTER 01 / 04`, `VISUAL STORY / 2026`, and a direct resume CTA without introducing commercial-client or partner language.
+- Motion: the intro uses sliding film panels; the hero combines title masking, subtle scroll scale/shift, and controlled metadata reveals; section entrances use opacity, blur, clip-path, and translation. Motion is restrained to hierarchy and transition moments rather than applied continuously to every element.
+- Interactions: hero video autoplay, mobile menu, section-aware header theme, anchor navigation, hover motion, resume CTA, and reduced-motion fallback are preserved.
+- Accessibility: semantic headings, labeled navigation controls, visible focus styles, keyboard-operable links/menu, high-contrast overlays, and `prefers-reduced-motion` fallbacks remain present.
 
 ## Findings
 
-No actionable P0, P1, or P2 findings remain.
+No actionable P0, P1, or P2 visual mismatch remains.
 
 ## Comparison history
 
 ### Iteration 1
 
-- [P1] Projects could render as an empty dark section after direct anchor navigation.
-  - Evidence: at `#projects`, browser state showed `top: 0`, `data-revealed: false`, and content opacity `0` for the 2828 px-tall section.
-  - Cause: the lowest IntersectionObserver threshold was `0.12`, which a very tall section could not reach inside the reduced observation band.
-  - Fix: added a `0` threshold and a regression test proving a 5% intersection reveals a tall section.
-  - Post-fix evidence: `work/qa/focus-projects.png`; browser state showed `data-revealed: true`, opacity `1`, active navigation “项目”.
-
-- [P2] A 320 px viewport had 15 px horizontal overflow.
-  - Evidence: client width `305`, scroll width `320`, with a visible horizontal scrollbar.
-  - Cause: `html` and `body` used a 320 px minimum width while the desktop-style browser reserved 15 px for its scrollbar.
-  - Fix: changed both minimum widths to `0`; responsive content still uses the explicit 320–767 px design range.
-  - Post-fix evidence: 320 px browser measurement returned client width `305`, scroll width `305`, overflow `0`; 390 px returned client width `375`, scroll width `375`, overflow `0`.
-
-- [P2] Browser title still read “Prototype”.
-  - Fix: set `lang="zh-CN"`, a job-positioning description, theme color, and title `王泽毅｜视觉创作 × AI 内容生产`.
-  - Post-fix evidence: the in-app browser reports the corrected title.
-
-### Iteration 2
-
-- Repeated desktop, 390 px, and 320 px checks found no remaining P0/P1/P2 issue.
-- Post-fix comparison: `work/qa/comparison-full.png` and `work/qa/comparison-hero.png`.
+- The first complete comparison pass found no actionable P0/P1/P2 mismatch, so no corrective visual loop was required.
+- The source board's intentional differences were verified as hybrid-direction choices: full-bleed film hero from the cinematic source and editorial grid/header behavior from the second source.
+- Responsive inspection confirmed that the dedicated portrait source is selected on mobile and that the title, CTA, metadata, and menu stay within the viewport.
 
 ## Primary interactions tested
 
-- Desktop anchor navigation and active-section highlighting.
-- Mobile menu open, close, and navigation to AI Practice and Projects.
-- AI deliverable tabs by mouse and `ArrowRight`; selected tab and roving `tabIndex` update correctly.
-- Project dialog opens from the first work item and closes with Escape.
-- Project video entered playing state with `paused: false`, `readyState: 4`, no media error.
-- Resume URL returns HTTP 200 with `application/pdf`; PDF is one A4 page.
-- Contact links resolve to `mailto:2364344055@qq.com` and `tel:17816786664`; QR image loaded at natural width 300 px.
-- Console warnings/errors after the final interaction pass: none.
+- Intro curtain renders `WZY` and `VISUAL STORY / 2026`, then clears the hero.
+- Desktop and mobile hero video reached `readyState: 4` and played with `paused: false`.
+- The desktop and mobile `<source>` variants were each selected at the intended breakpoint during testing.
+- Header theme changed from `dark` on the hero to `light` in the AI Practice section.
+- Mobile menu opened with `aria-expanded=true` and exposed readable navigation items.
+- Desktop, 390 px mobile, and no-horizontal-overflow states were inspected.
+- Browser console warnings/errors after the final local interaction pass: none.
 
 ## Open questions
 
-- None blocking handoff.
+- None blocking deployment.
 
 ## Implementation checklist
 
-- [x] Corrected long-section reveal behavior.
-- [x] Removed narrow-screen page overflow.
-- [x] Corrected document metadata and title.
-- [x] Verified desktop, 390 px, and 320 px layouts.
-- [x] Verified core mouse and keyboard interactions.
-- [x] Verified resume, contact methods, video playback, and console.
+- [x] Replaced the cover background with the supplied video.
+- [x] Added web-optimized desktop, mobile, and poster assets.
+- [x] Implemented the approved cinematic/editorial hybrid direction.
+- [x] Added higher-end intro, hero, section, and hover motion.
+- [x] Preserved job-seeking positioning and AI-first information hierarchy.
+- [x] Verified responsive layout, mobile navigation, video playback, adaptive header, and console.
 
 ## Follow-up polish
 
-- [P3] Self-host the chosen Chinese display typeface if identical typography across macOS and Windows becomes a hard brand requirement.
+- [P3] The source footage contains occasional embedded film typography such as `ESSENCE`. The dark veil keeps the portfolio title legible, but a future custom showreel without baked-in text would provide absolute typographic control.
 
 final result: passed

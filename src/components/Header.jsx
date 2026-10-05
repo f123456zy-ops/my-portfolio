@@ -18,7 +18,11 @@ export function Header({ sections, activeSection = "home" }) {
   const closeMenu = () => setOpen(false);
 
   return (
-    <header className="site-header" data-menu-open={open || undefined}>
+    <header
+      className="site-header"
+      data-menu-open={open || undefined}
+      data-theme={activeSection === "home" ? "dark" : "light"}
+    >
       <a className="site-header__logo" href="#home" onClick={closeMenu} aria-label="王泽毅首页">
         WZY
       </a>

@@ -4,6 +4,7 @@ import "@testing-library/jest-dom/vitest";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 import { App } from "../App";
+import { Header } from "./Header";
 
 afterEach(cleanup);
 
@@ -31,6 +32,16 @@ describe("application shell", () => {
     fireEvent.click(toggle);
     expect(toggle).toHaveAttribute("aria-expanded", "true");
     expect(toggle).toHaveAccessibleName("关闭导航");
+  });
+
+  it("lets the header move from cinematic dark to editorial light", () => {
+    const { rerender } = render(
+      <Header sections={["home", "ai-practice"]} activeSection="home" />,
+    );
+
+    expect(screen.getByRole("banner")).toHaveAttribute("data-theme", "dark");
+    rerender(<Header sections={["home", "ai-practice"]} activeSection="ai-practice" />);
+    expect(screen.getByRole("banner")).toHaveAttribute("data-theme", "light");
   });
 
   it("keeps non-navigation sections visible when reveal motion is enabled", () => {
