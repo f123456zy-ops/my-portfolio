@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowDown, ArrowRight } from "@phosphor-icons/react";
+import { useScrollProgress } from "../hooks/useScrollProgress";
 
 export function resolveHeroMediaState({ loaded, failed, reducedMotion }) {
   if (failed || reducedMotion) {
@@ -20,10 +21,12 @@ function motionIsReduced() {
 }
 
 export function Hero({ profile }) {
+  const sectionRef = useRef(null);
   const videoRef = useRef(null);
   const [loaded, setLoaded] = useState(false);
   const [failed, setFailed] = useState(false);
   const [reducedMotion] = useState(motionIsReduced);
+  const scrollProgress = useScrollProgress(sectionRef);
   const mediaState = resolveHeroMediaState({ loaded, failed, reducedMotion });
 
   useEffect(() => {
@@ -38,7 +41,13 @@ export function Hero({ profile }) {
   }, [loaded, mediaState.shouldPlay]);
 
   return (
-    <section id="home" className="hero" aria-labelledby="hero-title">
+    <section
+      ref={sectionRef}
+      id="home"
+      className="hero"
+      aria-labelledby="hero-title"
+      style={{ "--hero-scale": (1.01 + scrollProgress * 0.03).toFixed(4) }}
+    >
       <img
         className="hero__poster"
         src="/assets/hero-poster.jpg"
@@ -50,6 +59,7 @@ export function Hero({ profile }) {
         <video
           ref={videoRef}
           className="hero__video"
+          data-parallax
           poster="/assets/hero-poster.jpg"
           muted
           loop
