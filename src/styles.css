@@ -1045,6 +1045,7 @@ button {
   font-weight: 400;
   letter-spacing: -0.06em;
   line-height: 0.95;
+  overflow-wrap: anywhere;
 }
 
 .case-dialog__close {
