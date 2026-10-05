@@ -11,14 +11,14 @@ describe("job-focused profile sections", () => {
   it("shows only job-seeking contact actions and AI-first capabilities", () => {
     render(<App />);
 
-    expect(screen.getByRole("heading", { name: "期待新的工作机会" })).toBeInTheDocument();
-    const resumeLinks = screen.getAllByRole("link", { name: "下载简历" });
-    expect(resumeLinks).toHaveLength(2);
+    expect(screen.getByRole("heading", { name: "关于王泽毅" })).toBeInTheDocument();
+    const resumeLinks = screen.getAllByRole("link", { name: /下载简历/ });
+    expect(resumeLinks).toHaveLength(3);
     for (const link of resumeLinks) {
       expect(link).toHaveAttribute("href", "/resume-wang-zeyi.pdf");
     }
-    expect(screen.queryByText(/商业合作|合作咨询|客户/)).not.toBeInTheDocument();
-    expect(screen.getByText("AI 内容生产与工作流搭建")).toBeInTheDocument();
+    expect(screen.queryByText(/导演|工作室|商务合作|客户咨询|合作伙伴/)).not.toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "AI 内容生产与工作流" })).toBeInTheDocument();
   });
 
   it("renders verified experience and direct contact methods", () => {

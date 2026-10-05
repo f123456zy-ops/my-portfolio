@@ -125,51 +125,6 @@ export const AI_DELIVERABLES = Object.freeze([
   },
 ]);
 
-export const PROJECTS = Object.freeze([
-  {
-    id: "biocare-ai-film",
-    discipline: "AI VIDEO / EDITING",
-    title: "BIOCARE AI 品牌视频",
-    role: "创意策划、AI 画面、剪辑与后期",
-    summary: "将品牌视觉、自然意象和产品信息整合为可直接发布的短片。",
-    outcome: "建立脚本—素材—后期的标准化制作链路。",
-    image: ASSET_MAP.aiVideoPoster,
-    video: ASSET_MAP.aiVideo,
-    alt: "BIOCARE 森林主题品牌视频",
-  },
-  {
-    id: "brand-space-film",
-    discipline: "PHOTOGRAPHY / FILM",
-    title: "品牌空间与活动影像",
-    role: "现场拍摄、镜头设计与剪辑",
-    summary: "在商业空间和品牌活动中完成从现场观察到成片交付的完整影像表达。",
-    outcome: "兼顾空间质感、人物状态与品牌信息。",
-    image: ASSET_MAP.eventFilmPoster,
-    video: ASSET_MAP.eventFilm,
-    alt: "品牌活动现场影像",
-  },
-  {
-    id: "biocare-content-system",
-    discipline: "VISUAL DESIGN / CONTENT",
-    title: "护肤品牌内容矩阵",
-    role: "产品摄影、视觉设计与内容适配",
-    summary: "围绕产品、知识科普与节点传播，持续产出视频、推文和视觉物料。",
-    outcome: "周内容产量由 1 提升至 8，素材复用率提升 300%。",
-    image: ASSET_MAP.biocareProduct,
-    alt: "BIOCARE 护肤产品内容视觉",
-  },
-  {
-    id: "content-workflow",
-    discipline: "AI WORKFLOW",
-    title: "多形态内容生产工作流",
-    role: "流程设计、AI 协作与质量把控",
-    summary: "把公众号、视频、详情页和海报纳入同一套资产与交付流程。",
-    outcome: "在不牺牲视觉判断的前提下降低 50% 创作成本。",
-    image: ASSET_MAP.workflow,
-    alt: "多形态内容生产工作流",
-  },
-]);
-
 export const FEATURED_CASES = Object.freeze([
   {
     id: "biocare-ai-film",
@@ -214,7 +169,7 @@ export const FEATURED_CASES = Object.freeze([
   },
 ]);
 
-export const ARCHIVE_PROJECTS = Object.freeze([
+export const VISUAL_ARCHIVE = Object.freeze([
   {
     id: "archive-wanderer",
     title: "《独行者》",
@@ -265,46 +220,6 @@ export const ARCHIVE_PROJECTS = Object.freeze([
   },
 ]);
 
-export const VISUAL_ARCHIVE = ARCHIVE_PROJECTS;
-
-export const CAPABILITIES = Object.freeze([
-  {
-    id: "cap-ai",
-    index: "01",
-    title: "AI 内容生产与工作流搭建",
-    description: "脚本策划、生成式素材、提示词设计、自动化编排与多平台适配。",
-    tools: ["ChatGPT", "Gemini", "Midjourney", "即梦"],
-  },
-  {
-    id: "cap-photo",
-    index: "02",
-    title: "摄影与影像制作",
-    description: "人像、产品、活动与商业空间拍摄，兼顾布光、构图和现场节奏。",
-    tools: ["摄影", "摄像", "布光", "现场执行"],
-  },
-  {
-    id: "cap-editing",
-    index: "03",
-    title: "视频剪辑与后期",
-    description: "短视频、品牌片与活动内容的结构剪辑、调色、字幕和声音处理。",
-    tools: ["Premiere Pro", "After Effects", "调色"],
-  },
-  {
-    id: "cap-visual",
-    index: "04",
-    title: "视觉设计与品牌表达",
-    description: "品牌 VI、海报、活动物料、详情页和社交媒体视觉的系统化延展。",
-    tools: ["Photoshop", "Illustrator", "C4D"],
-  },
-  {
-    id: "cap-strategy",
-    index: "05",
-    title: "内容策略与运营协作",
-    description: "从选题、对标和内容结构出发，连接创意、生产、复盘与持续优化。",
-    tools: ["公众号", "视频号", "抖音", "小红书"],
-  },
-]);
-
 export const ROLE_SKILLS = Object.freeze([
   {
     id: "skill-ai",
@@ -343,7 +258,7 @@ export const ROLE_SKILLS = Object.freeze([
   },
 ]);
 
-export const EXPERIENCE = Object.freeze([
+export const CAREER = Object.freeze([
   {
     id: "exp-bioforest",
     period: "2024.05 — 至今",
@@ -377,8 +292,6 @@ export const EXPERIENCE = Object.freeze([
     highlights: ["优秀毕业生", "省级一等奖 ×2", "视觉设计基础"],
   },
 ]);
-
-export const CAREER = EXPERIENCE;
 
 export const CONTACT = Object.freeze({
   heading: "期待新的工作机会",

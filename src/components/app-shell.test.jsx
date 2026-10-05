@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 
 import "@testing-library/jest-dom/vitest";
-import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 import { App } from "../App";
 import { Header } from "./Header";
@@ -9,19 +9,39 @@ import { Header } from "./Header";
 afterEach(cleanup);
 
 describe("application shell", () => {
-  it("renders job navigation and corrected hero identity", () => {
-    render(<App />);
+  it("renders the approved five-chapter hiring journey", () => {
+    const { container } = render(<App />);
+    const navigation = screen.getByRole("navigation", { name: "主导航" });
 
-    expect(screen.getByRole("heading", { level: 1, name: "王泽毅" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "AI 实践" })).toHaveAttribute(
+    expect(within(navigation).getAllByRole("link").map((link) => link.textContent)).toEqual([
+      "AI 能力",
+      "代表项目",
+      "经历",
+      "关于",
+    ]);
+    expect(within(navigation).getByRole("link", { name: "AI 能力" })).toHaveAttribute(
       "href",
-      "#ai-practice",
+      "#ai",
     );
-    expect(screen.getByRole("link", { name: "查看作品" })).toHaveAttribute(
+    expect(within(navigation).getByRole("link", { name: "代表项目" })).toHaveAttribute(
       "href",
-      "#projects",
+      "#work",
     );
-    expect(screen.queryByText("商业合作")).not.toBeInTheDocument();
+    expect([...container.querySelectorAll("main > section")].map((section) => section.id)).toEqual([
+      "home",
+      "ai",
+      "work",
+      "career",
+      "about",
+    ]);
+
+    const hero = container.querySelector("#home");
+    expect(within(hero).getByRole("heading", { level: 1, name: "王泽毅" })).toBeInTheDocument();
+    expect(within(hero).getByText("新媒体内容运营（AI 内容方向）")).toBeVisible();
+    expect(container).not.toHaveTextContent(/CHAPTER|VISUAL STORY|WANG ZEYI \/ PORTFOLIO/);
+    expect(container).not.toHaveTextContent(/导演|工作室|商务合作|客户咨询|合作伙伴/);
+
+    expect(screen.getAllByRole("link", { name: /下载简历/ })).toHaveLength(3);
   });
 
   it("exposes an accessible mobile navigation toggle", () => {
@@ -35,19 +55,10 @@ describe("application shell", () => {
   });
 
   it("lets the header move from cinematic dark to editorial light", () => {
-    const { rerender } = render(
-      <Header sections={["home", "ai-practice"]} activeSection="home" />,
-    );
+    const { rerender } = render(<Header sections={["home", "ai"]} activeSection="home" />);
 
     expect(screen.getByRole("banner")).toHaveAttribute("data-theme", "dark");
-    rerender(<Header sections={["home", "ai-practice"]} activeSection="ai-practice" />);
+    rerender(<Header sections={["home", "ai"]} activeSection="ai" />);
     expect(screen.getByRole("banner")).toHaveAttribute("data-theme", "light");
-  });
-
-  it("keeps non-navigation sections visible when reveal motion is enabled", () => {
-    render(<App />);
-
-    const capabilities = screen.getByRole("heading", { name: "我的能力" }).closest("section");
-    expect(capabilities).toHaveAttribute("data-revealed");
   });
 });

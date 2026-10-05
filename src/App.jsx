@@ -2,25 +2,23 @@ import { useEffect } from "react";
 import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
 import { Hero } from "./components/Hero";
-import { AIPractice } from "./components/AIPractice";
-import { Archive } from "./components/Archive";
-import { About } from "./components/About";
-import { Capabilities } from "./components/Capabilities";
-import { Experience } from "./components/Experience";
-import { JobContact } from "./components/JobContact";
+import { AIContentSystem } from "./components/AIContentSystem";
+import { FeaturedCases } from "./components/FeaturedCases";
+import { CareerProfile } from "./components/CareerProfile";
+import { ProfileContact } from "./components/ProfileContact";
 import { IntroCurtain } from "./components/IntroCurtain";
-import { Projects } from "./components/Projects";
 import { useSectionObserver } from "./hooks/useSectionObserver";
 import {
   AI_DELIVERABLES,
   AI_METRICS,
-  ARCHIVE_PROJECTS,
-  CAPABILITIES,
+  AI_WORKFLOW_STAGES,
+  CAREER,
   CONTACT,
-  EXPERIENCE,
+  FEATURED_CASES,
   PAGE_SECTIONS,
-  PROJECTS,
+  ROLE_SKILLS,
   SITE_PROFILE,
+  VISUAL_ARCHIVE,
 } from "./content/portfolio";
 
 export function App() {
@@ -56,13 +54,14 @@ export function App() {
       <Header sections={PAGE_SECTIONS} activeSection={activeId} />
       <main>
         <Hero profile={SITE_PROFILE} />
-        <AIPractice deliverables={AI_DELIVERABLES} metrics={AI_METRICS} />
-        <Projects items={PROJECTS} />
-        <Archive items={ARCHIVE_PROJECTS} />
-        <About profile={SITE_PROFILE} />
-        <Capabilities items={CAPABILITIES} />
-        <Experience items={EXPERIENCE} />
-        <JobContact contact={CONTACT} />
+        <AIContentSystem
+          stages={AI_WORKFLOW_STAGES}
+          metrics={AI_METRICS}
+          deliverables={AI_DELIVERABLES}
+        />
+        <FeaturedCases cases={FEATURED_CASES} archive={VISUAL_ARCHIVE} />
+        <CareerProfile items={CAREER} skills={ROLE_SKILLS} />
+        <ProfileContact profile={SITE_PROFILE} contact={CONTACT} />
       </main>
       <Footer profile={SITE_PROFILE} />
     </div>

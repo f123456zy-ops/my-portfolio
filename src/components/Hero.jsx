@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ArrowDown, ArrowRight, DownloadSimple } from "@phosphor-icons/react";
 import { useScrollProgress } from "../hooks/useScrollProgress";
 
 export function resolveHeroMediaState({ loaded, failed, reducedMotion }) {
@@ -23,6 +22,7 @@ function motionIsReduced() {
 export function Hero({ profile }) {
   const sectionRef = useRef(null);
   const videoRef = useRef(null);
+  const inViewRef = useRef(true);
   const [loaded, setLoaded] = useState(false);
   const [failed, setFailed] = useState(false);
   const [reducedMotion] = useState(motionIsReduced);
@@ -31,7 +31,7 @@ export function Hero({ profile }) {
 
   const attemptPlayback = useCallback(() => {
     const video = videoRef.current;
-    if (!video || !mediaState.shouldPlay) {
+    if (!video || !mediaState.shouldPlay || !inViewRef.current) {
       return;
     }
 
@@ -68,6 +68,28 @@ export function Hero({ profile }) {
     };
   }, [attemptPlayback, loaded, mediaState.shouldPlay]);
 
+  useEffect(() => {
+    const section = sectionRef.current;
+    const video = videoRef.current;
+    if (!section || !video || typeof window.IntersectionObserver !== "function") {
+      return undefined;
+    }
+
+    const observer = new window.IntersectionObserver(
+      ([entry]) => {
+        inViewRef.current = entry.isIntersecting;
+        if (entry.isIntersecting) {
+          attemptPlayback();
+        } else {
+          video.pause();
+        }
+      },
+      { threshold: 0.08 },
+    );
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, [attemptPlayback]);
+
   return (
     <section
       ref={sectionRef}
@@ -100,6 +122,7 @@ export function Hero({ profile }) {
           tabIndex={-1}
           aria-hidden="true"
           data-video-ready={mediaState.videoReady || undefined}
+          data-video-failed={failed || undefined}
           onLoadedData={() => setLoaded(true)}
           onCanPlay={attemptPlayback}
           onError={() => setFailed(true)}
@@ -114,40 +137,32 @@ export function Hero({ profile }) {
       )}
       <div className="hero__veil" aria-hidden="true" />
 
-      <div className="hero__chapter" aria-hidden="true">
-        <span>CHAPTER 01 / 04</span>
-        <span>VISUAL STORY / 2026</span>
-      </div>
-
       <div className="hero__content page-width">
         <p className="hero__kicker">
-          <span>A VISUAL REALITY</span>
-          {profile.roles.join(" · ")} · {profile.city}
+          <span>NEW MEDIA OPERATIONS / AI CONTENT</span>
+          {profile.city}
         </p>
         <h1 id="hero-title"><span>{profile.name}</span></h1>
-        <p className="hero__positioning">{profile.positioning}</p>
+        <p className="hero__positioning">{profile.title}</p>
+        <p className="hero__capabilities">{profile.capabilityLine}</p>
         <p className="hero__statement">{profile.statement}</p>
         <div className="hero__actions">
-          <a className="button button--primary" href="#projects">
-            查看作品
-            <ArrowRight aria-hidden="true" weight="bold" />
+          <a className="button button--primary" href="#work">
+            查看代表项目
           </a>
           <a className="button button--ghost" href="/resume-wang-zeyi.pdf" download>
             下载简历
-            <DownloadSimple aria-hidden="true" weight="bold" />
           </a>
         </div>
       </div>
 
-      <p className="hero__rail" aria-hidden="true">PHOTO&nbsp;&nbsp; VIDEO&nbsp;&nbsp; DESIGN&nbsp;&nbsp; AI</p>
+      <p className="hero__rail" aria-hidden="true">STRATEGY&nbsp;&nbsp; AI&nbsp;&nbsp; VIDEO&nbsp;&nbsp; VISUAL</p>
       <div className="hero__footer" aria-hidden="true">
-        <span>01 / 04</span>
-        <span>IDEAS INTO VISUAL WORLDS</span>
-        <span>WANG ZEYI / PORTFOLIO</span>
+        <span>OPEN TO WORK</span>
+        <span>NINGBO / 2026</span>
       </div>
-      <a className="hero__scroll" href="#ai-practice" aria-label="向下浏览 AI 实践">
+      <a className="hero__scroll" href="#ai" aria-label="向下浏览 AI 内容生产能力">
         <span>SCROLL</span>
-        <ArrowDown aria-hidden="true" />
       </a>
     </section>
   );

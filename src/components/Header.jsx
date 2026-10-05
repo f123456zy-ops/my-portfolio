@@ -1,14 +1,11 @@
 import { useState } from "react";
-import { DownloadSimple, List, X } from "@phosphor-icons/react";
+import { List, X } from "@phosphor-icons/react";
 
 const NAV_ITEMS = [
-  { id: "home", label: "首页" },
-  { id: "ai-practice", label: "AI 实践" },
-  { id: "projects", label: "项目" },
-  { id: "archive", label: "早期作品" },
+  { id: "ai", label: "AI 能力" },
+  { id: "work", label: "代表项目" },
+  { id: "career", label: "经历" },
   { id: "about", label: "关于" },
-  { id: "experience", label: "经历" },
-  { id: "contact", label: "联系" },
 ];
 
 export function Header({ sections, activeSection = "home" }) {
@@ -58,7 +55,6 @@ export function Header({ sections, activeSection = "home" }) {
 
       <a className="button button--header" href="/resume-wang-zeyi.pdf" download>
         下载简历
-        <DownloadSimple aria-hidden="true" weight="bold" />
       </a>
     </header>
   );
