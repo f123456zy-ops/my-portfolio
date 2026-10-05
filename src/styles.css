@@ -414,7 +414,7 @@ button {
   margin: 0;
   overflow: hidden;
   font-family: var(--display);
-  font-size: clamp(7rem, 13vw, 12rem);
+  font-size: clamp(6.25rem, 11.5vw, 10.5rem);
   font-weight: 400;
   letter-spacing: -0.08em;
   line-height: 0.78;
@@ -1592,7 +1592,7 @@ html[data-motion-ready] main > section[data-revealed] [data-reveal] {
   }
 
   .hero h1 {
-    font-size: clamp(4.4rem, 23vw, 7rem);
+    font-size: clamp(4rem, 20vw, 6rem);
     line-height: 0.84;
   }
 
@@ -1852,7 +1852,7 @@ html[data-motion-ready] main > section[data-revealed] [data-reveal] {
   }
 
   .hero h1 {
-    font-size: 4.2rem;
+    font-size: 3.75rem;
   }
 
   .hero__positioning {
