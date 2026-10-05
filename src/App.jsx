@@ -34,7 +34,13 @@ export function App() {
 
   useEffect(() => {
     const sections = document.querySelectorAll("main > section");
-    sections.forEach((section) => section.setAttribute("data-reveal", ""));
+    const observedSections = new Set(PAGE_SECTIONS);
+    sections.forEach((section) => {
+      section.setAttribute("data-reveal", "");
+      if (!observedSections.has(section.id)) {
+        section.setAttribute("data-revealed", "");
+      }
+    });
     const frame = window.requestAnimationFrame(() => {
       document.documentElement.setAttribute("data-motion-ready", "");
     });

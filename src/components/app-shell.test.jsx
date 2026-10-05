@@ -32,4 +32,11 @@ describe("application shell", () => {
     expect(toggle).toHaveAttribute("aria-expanded", "true");
     expect(toggle).toHaveAccessibleName("关闭导航");
   });
+
+  it("keeps non-navigation sections visible when reveal motion is enabled", () => {
+    render(<App />);
+
+    const capabilities = screen.getByRole("heading", { name: "我的能力" }).closest("section");
+    expect(capabilities).toHaveAttribute("data-revealed");
+  });
 });
