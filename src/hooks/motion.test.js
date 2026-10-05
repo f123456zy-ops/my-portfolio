@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 
-import { renderHook } from "@testing-library/react";
+import { act, renderHook } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { useReducedMotion } from "./useReducedMotion";
 import { useSectionObserver } from "./useSectionObserver";
@@ -12,6 +12,7 @@ const originalMatchMedia = window.matchMedia;
 afterEach(() => {
   window.IntersectionObserver = originalIntersectionObserver;
   window.matchMedia = originalMatchMedia;
+  document.body.innerHTML = "";
   vi.restoreAllMocks();
 });
 
@@ -44,6 +45,42 @@ describe("motion safety", () => {
     expect(result.current.visibleIds.has("home")).toBe(true);
     expect(result.current.visibleIds.has("ai-practice")).toBe(true);
     expect(result.current.activeId).toBe("home");
+  });
+
+  it("reveals a tall section as soon as any part enters the viewport", () => {
+    document.body.innerHTML = '<section id="projects"></section>';
+    let observer;
+    window.IntersectionObserver = class {
+      constructor(callback, options) {
+        this.callback = callback;
+        this.options = options;
+        observer = this;
+      }
+
+      observe() {}
+      disconnect() {}
+    };
+
+    const { result } = renderHook(() => useSectionObserver(["projects"]));
+    const minimumThreshold = Math.min(
+      ...(Array.isArray(observer.options.threshold)
+        ? observer.options.threshold
+        : [observer.options.threshold ?? 0]),
+    );
+
+    if (0.05 >= minimumThreshold) {
+      act(() => {
+        observer.callback([
+          {
+            isIntersecting: true,
+            intersectionRatio: 0.05,
+            target: document.getElementById("projects"),
+          },
+        ]);
+      });
+    }
+
+    expect(result.current.visibleIds.has("projects")).toBe(true);
   });
 
   it("clamps geometry-based scroll progress", () => {

@@ -43,7 +43,7 @@ export function useSectionObserver(ids) {
           setActiveId(leadingEntry.target.id);
         }
       },
-      { rootMargin: "-18% 0px -58%", threshold: [0.12, 0.35, 0.6] },
+      { rootMargin: "-18% 0px -58%", threshold: [0, 0.12, 0.35, 0.6] },
     );
 
     targets.forEach((target) => observer.observe(target));
