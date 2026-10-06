@@ -159,7 +159,11 @@ export function Hero({ profile }) {
           setLoaded(true);
           attemptPlayback();
         }}
-        onError={() => setFailed(true)}
+        onError={(event) => {
+          if (event.currentTarget.error) {
+            setFailed(true);
+          }
+        }}
       >
         <source
           src="/videos/hero-cinematic-mobile.mp4"

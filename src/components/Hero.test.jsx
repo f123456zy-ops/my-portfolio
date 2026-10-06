@@ -134,9 +134,26 @@ describe("job-first video hero", () => {
     await waitFor(() => expect(play).toHaveBeenCalledTimes(1));
   });
 
+  it("keeps a playable desktop source visible after a candidate source error", async () => {
+    vi.spyOn(window.HTMLMediaElement.prototype, "play").mockResolvedValue(undefined);
+    const { container } = render(<Hero profile={SITE_PROFILE} />);
+    const video = container.querySelector("video");
+
+    fireEvent.canPlay(video);
+    await waitFor(() => expect(video).toHaveAttribute("data-video-ready", "true"));
+    fireEvent.error(video);
+
+    expect(video).not.toHaveAttribute("data-video-failed");
+    expect(video).toHaveAttribute("data-video-ready", "true");
+  });
+
   it("keeps all hero content visible on a true media failure", () => {
     const { container } = render(<Hero profile={SITE_PROFILE} />);
     const video = container.querySelector("video");
+    Object.defineProperty(video, "error", {
+      configurable: true,
+      value: { code: 4, message: "No supported source" },
+    });
     fireEvent.error(video);
 
     expect(video).toHaveAttribute("data-video-failed", "true");
